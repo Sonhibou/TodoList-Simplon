@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.0/firebase-analytics.js";
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
+    
+    <script src="./app.js"></script>
+    <script src="./firebase.js"></script>
+    
+    <title>Todo List</title>
+  </head>
+      <body>
+          <div class="container">
+            <p>
+              <label for="new-task">Ajouter une taches</label>
+              <input id="new-task" type="text" placeholder="Tire de la tache">
+              <input id="new-task-description" type="text" placeholder="Description de la tache à faire">
+              <input id="new-task-etat" type="text" placeholder="Etat de la tache">
+              <input id="new-task-deadline" type="date">
+              <select id="form">
+                <option value="none">Quelle est sa priorité ?</option>
+                <option value="Faible">Faible</option>
+                <option value="Moyenne">Moyenne</option>
+                <option value="Important">Important</option>
+              </select>
+              <button>Ajouter</button>
+            </p>
+            
+            <h3>A Faire</h3>
+            <ul id="incomplete-tasks">
+              <li>
+                  <input type="checkbox">
+                  <label>Veille Javascript</label>
+                  <input type="text">
+                  <button class="edit">Modifier</button>
+                  <button class="delete">Supprimer</button>
+                </li>
+              <!-- <li class="editMode"><input type="checkbox"><label>Cours PHP</label><input type="text" value="Cours PHP"><button class="edit">Modifier</button><button class="delete">Supprimer</button></li> -->  
+            </ul>
+            
+            <h3>Terminé</h3>
+            <ul id="completed-tasks">
+              <li>
+                <input type="checkbox" checked>
+                <label>Veille Andoid</label>
+                <input type="text">
+                <button class="edit">Modifier</button>
+                <button class="delete">Supprimer</button>
+              </li>
+            </ul>
+        </div>
+    <script src="app.js"></script>
+    <script src="./firebase.js"></script>
+</body>
+</html>
