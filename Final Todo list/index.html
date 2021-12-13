@@ -81,9 +81,9 @@
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="">Important</a>
-                        <a class="collapse-item" href="">Moyen</a>
-                        <a class="collapse-item" href="">Faible</a>
+                        <button class="collapse-item task-important" style="border: none;">Important</button>
+                        <button class="collapse-item task-moyen" style="border: none;">Moyen</button>
+                        <button class="collapse-item task-faible" style="border: none;">Faible</button>
                     </div>
                 </div>
             </li>
@@ -166,14 +166,14 @@
                           <input id="new-task" type="text" placeholder="Tire de la tache" class="text-center">
                           <input id="new-task-description" type="text" placeholder="Description de la tache" class="text-center">
                           <select id="new-task-etat">
-                            <option value="none">Donner l'etat de la tache </option>
+                            <option value="none">Donner l'etat de la tache ?&nbsp;</option>
                             <option value="Active">Active</option>
                             <option value="En Cours">En Cours</option>
                             <option value="Terminé">Terminé</option>
                           </select>
                           <input id="new-task-deadline" type="date" class="text-center">
                           <select id="priorite">
-                            <option value="none">Quelle est sa priorité </option>
+                            <option value="none">Quelle est sa priorité ?&nbsp;</option>
                             <option value="Faible">Faible</option>
                             <option value="Moyenne">Moyenne</option>
                             <option value="Important">Important</option>
