@@ -15,55 +15,75 @@ const firebaseConfig = {
   // Initialize Firebase
  // const app = initializeApp(firebaseConfig);
 
- firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 
- let tacheInfo = firebase.database().ref("liste");
- var taskInput=document.querySelector("#new-task");//Ajouter nouveau taches.
- var taskDescription=document.querySelector("#new-task-description");
- var taskEtat=document.querySelector("#new-task-etat");
- var taskDate=document.querySelector("#new-task-deadline");
- var taskPriorite=document.querySelector("#priorite");
+      let tacheInfo = firebase.database().ref("liste");
 
 
-document.querySelector(".task").addEventListener("submit", submitForm);
+       document.querySelector(".task").addEventListener("submit", submitForm);
 
-function submitForm(e) {
-  e.preventDefault();
+      function submitForm(e) {
+        e.preventDefault();
 
-   let taskInput=document.querySelector("#new-task").value;
-   let taskDescription=document.querySelector("#new-task-description").value;
-   let taskEtat=document.querySelector("#new-task-etat").value;
-   let taskDate=document.querySelector("#new-task-deadline").value;
-   let taskPriorite=document.querySelector("#priorite").value;
+        let taskInput=document.querySelector("#new-task").value;
+        let taskDescription=document.querySelector("#new-task-description").value;
+        let taskEtat=document.querySelector("#new-task-etat").value;
+        let taskDate=document.querySelector("#new-task-deadline").value;
+        let taskPriorite=document.querySelector("#priorite").value;
 
-  console.log(taskInput, taskDescription, taskEtat, taskPriorite, taskDate);
+        console.log(taskInput, taskDescription, taskEtat, taskPriorite, taskDate);
 
-  saveTaskInfo(taskInput, taskDescription, taskEtat, taskPriorite, taskDate);
+        saveTaskInfo(taskInput, taskDescription, taskEtat, taskPriorite, taskDate);
 
-  document.querySelector(".task").reset();
-}
+        document.querySelector(".task").reset();
+      }
 
-// Save infos to Firebase
-function saveTaskInfo(taskInput, taskDescription, taskEtat, taskPriorite, taskDate) {
-  let newContactInfo = tacheInfo.push();
+      // Save infos to Firebase
+      function saveTaskInfo(taskInput, taskDescription, taskEtat, taskPriorite, taskDate) {
+        let newContactInfo = tacheInfo.push();
 
-  newContactInfo.set({
-    titre: taskInput,
-    etat: taskEtat,
-    description: taskDescription,
-    priorite: taskPriorite,
-    daate: taskDate,
-  });
-}
+        newContactInfo.set({
+          titre: taskInput,
+          etat: taskEtat,
+          description: taskDescription,
+          priorite: taskPriorite,
+          daate: taskDate,
+        });
+      }
 
-document.querySelector(".all-task").addEventListener("click", readTaskInfo);
+      document.querySelector(".all-task").addEventListener("click", readTaskInfo);
+              
+        let priorite = ['Important', 'Moyenne', 'Faible'];
+        let etat = ['Terminé','En Cours'];
 
-// Read infos to Firebase
-  function readTaskInfo(){
+        document.querySelector(".finish-task").addEventListener("click", ()=>{
+          readEtat(etat[0]);
+        });
 
-        document.querySelector(".details-task").innerHTML = ""; 
-        tacheInfo.once('value').then((snapshot) => {
-                Object.keys(snapshot.val()).forEach((key) => {
+
+        document.querySelector(".doing-task").addEventListener("click", ()=>{
+          readEtat(etat[1]);
+        });;
+
+
+        document.querySelector(".task-important").addEventListener("click", ()=>{
+          read(priorite[0]);
+          });
+
+        document.querySelector(".task-moyen").addEventListener("click", ()=>{
+          read(priorite[1]);
+          });
+        
+        document.querySelector(".task-faible").addEventListener("click", ()=>{
+          read(priorite[2]);
+        });
+        
+        
+        function read(Niveau){
+          document.querySelector(".details-task").innerHTML = ""; 
+          tacheInfo.once('value').then((snapshot) => {
+              Object.keys(snapshot.val()).forEach((key) => {
+                if (`${snapshot.val()[key].priorite}` == Niveau){
                     let details = document.querySelector(".details-task");
                     let p = document.createElement("h4");
                     let editTaches = document.createElement("button");
@@ -71,134 +91,45 @@ document.querySelector(".all-task").addEventListener("click", readTaskInfo);
                     editTaches.className="edit";
                     editTaches.style.border = 0
                     editTaches.style.margin = "20px";
-
+                    
                     p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
                     p.appendChild(editTaches);
                     details.appendChild(p);
+                  }
                     
               });
             });
+        }
+        function readEtat(Niveau){
+          document.querySelector(".details-task").innerHTML = ""; 
+          tacheInfo.once('value').then((snapshot) => {
+              Object.keys(snapshot.val()).forEach((key) => {
+                if (`${snapshot.val()[key].etat}` == Niveau){
+                    let details = document.querySelector(".details-task");
+                    let p = document.createElement("h4");
+                    let editTaches = document.createElement("button");
+                    editTaches.innerText="Modifier";
+                    editTaches.className="edit";
+                    editTaches.style.border = 0
+                    editTaches.style.margin = "20px";
+                    
+                    p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
+                    p.appendChild(editTaches);
+                    details.appendChild(p);
+                  }
+                    
+              });
+            });
+        }
 
-    }
-    
+      // Read infos to Firebase
+      function readTaskInfo(){
+        
+         document.querySelector(".details-task").innerHTML = ""; 
+           for(let i=0; i<3; i++){
+           read(priorite[i]);
+          }
+      }
 
-    document.querySelector(".finish-task").addEventListener("click", readTaskFinish);
-
-    function readTaskFinish(){
-
-      document.querySelector(".details-task").innerHTML = ""; 
-      tacheInfo.once('value').then((snapshot) => {
-          Object.keys(snapshot.val()).forEach((key) => {
-                let details = document.querySelector(".details-task");
-                let p = document.createElement("h4");
-                let editTaches = document.createElement("button");
-                editTaches.innerText="Modifier";
-                editTaches.className="edit";
-                editTaches.style.border = 0
-                editTaches.style.margin = "20px";
-                if (`${snapshot.val()[key].etat}` =='Terminé'){
-                p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
-                p.appendChild(editTaches);
-                details.appendChild(p);
-              }
-                
-           });
-        });
-    }
-
-
-    document.querySelector(".doing-task").addEventListener("click", readTaskDoing);
-
-    function readTaskDoing(){
-
-      document.querySelector(".details-task").innerHTML = ""; 
-      tacheInfo.once('value').then((snapshot) => {
-          Object.keys(snapshot.val()).forEach((key) => {
-                let details = document.querySelector(".details-task");
-                let p = document.createElement("h4");
-                let editTaches = document.createElement("button");
-                editTaches.innerText="Modifier";
-                editTaches.className="edit";
-                editTaches.style.border = 0
-                editTaches.style.margin = "20px";
-                if (`${snapshot.val()[key].etat}` =='En Cours'){
-                p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
-                p.appendChild(editTaches);
-                details.appendChild(p);
-              }
-                
-           });
-        });
-    }
-
-    document.querySelector(".task-important").addEventListener("click", readTaskImportant);
-
-    function readTaskImportant(){
-
-      document.querySelector(".details-task").innerHTML = ""; 
-      tacheInfo.once('value').then((snapshot) => {
-          Object.keys(snapshot.val()).forEach((key) => {
-                let details = document.querySelector(".details-task");
-                let p = document.createElement("h4");
-                let editTaches = document.createElement("button");
-                editTaches.innerText="Modifier";
-                editTaches.className="edit";
-                editTaches.style.border = 0
-                editTaches.style.margin = "20px";
-                if (`${snapshot.val()[key].priorite}` =='Important'){
-                p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
-                p.appendChild(editTaches);
-                details.appendChild(p);
-              }
-                
-           });
-        });
-    }
-
-    document.querySelector(".task-moyen").addEventListener("click", readTaskMoyen);
-
-    function readTaskMoyen(){
-
-      document.querySelector(".details-task").innerHTML = ""; 
-      tacheInfo.once('value').then((snapshot) => {
-          Object.keys(snapshot.val()).forEach((key) => {
-                let details = document.querySelector(".details-task");
-                let p = document.createElement("h4");
-                let editTaches = document.createElement("button");
-                editTaches.innerText="Modifier";
-                editTaches.className="edit";
-                editTaches.style.border = 0
-                editTaches.style.margin = "20px";
-                if (`${snapshot.val()[key].priorite}` =='Moyenne'){
-                p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
-                p.appendChild(editTaches);
-                details.appendChild(p);
-              }
-                
-           });
-        });
-    }
-
-    document.querySelector(".task-faible").addEventListener("click", readTaskFaible);
-
-    function readTaskFaible(){
-
-      document.querySelector(".details-task").innerHTML = ""; 
-      tacheInfo.once('value').then((snapshot) => {
-          Object.keys(snapshot.val()).forEach((key) => {
-                let details = document.querySelector(".details-task");
-                let p = document.createElement("h4");
-                let editTaches = document.createElement("button");
-                editTaches.innerText="Modifier";
-                editTaches.className="edit";
-                editTaches.style.border = 0
-                editTaches.style.margin = "20px";
-                if (`${snapshot.val()[key].priorite}` =='Faible'){
-                p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
-                p.appendChild(editTaches);
-                details.appendChild(p);
-              }
-                
-           });
-        });
-    }
+        
+        
