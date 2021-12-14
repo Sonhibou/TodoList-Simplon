@@ -19,6 +19,8 @@
 
     <!-- Custom styles for this template-->
     <link href="css/style.min.css" rel="stylesheet">
+   <!--  <link rel="stylesheet" href="taches/taches.css"> -->
+   <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
 
 </head>
 
@@ -36,30 +38,36 @@
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Simplon Task</span></a>
+                    <span>Simplon Task</span>
+                </a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
 
             <!-- Heading -->
-            <div class="sidebar-heading">
+            <div class="sidebar-heading" style="font-size: 20px; font-weight: 900;">
                 Tâches
             </div>
-
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapseTwo"
-                    aria-expanded="true" aria-controls="collapseTwo">
-                    <span>Ajouter une tâche</span>
-                </a>
-            </li>
+           
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-target="#collapseUtilities"
+                <a class="nav-link collapsed all-task" href="#" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <span>Toutes les tâches</span>
+                    <button style="border: none; border-radius: 20px;">Toutes les tâches</button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed doing-task" href="#" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <button style="border: none; border-radius: 20px;">Taches en Cours</button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed finish-task" href="#" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <button style="border: none; border-radius: 20px;" >Taches terminé</button>
                 </a>
             </li>
 
@@ -69,13 +77,13 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
                     aria-expanded="true" aria-controls="collapsePages">
-                    <span>Niveau de tâche</span>
+                    <span style="font-size: 20px;">Niveau de tâche</span>
                 </a>
                 <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="">Important</a>
-                        <a class="collapse-item" href="">Moyen</a>
-                        <a class="collapse-item" href="">Faible</a>
+                        <button class="collapse-item task-important" style="border: none;">Important</button>
+                        <button class="collapse-item task-moyen" style="border: none;">Moyen</button>
+                        <button class="collapse-item task-faible" style="border: none;">Faible</button>
                     </div>
                 </div>
             </li>
@@ -117,7 +125,7 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Thierno O. Diouf</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small"> Profil </span>
                                 <img class="img-profile rounded-circle"
                                     src="img/undraw_profile.svg">
                             </a>
@@ -142,7 +150,7 @@
                                     Logout
                                 </a>
                             </div>
-                        </li>
+                        </li> 
                     </ul>
 
                 </nav>
@@ -150,6 +158,32 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+
+                    <div class="list-task text-center">
+                        <h1 class="text-center mb-4">Bienvenue sur l'application Todo List</h1>
+                        <form class="task mb-4">
+                          <label for="new-task" style="font-weight: 900; font-size: 20px;">Ajouter une taches</label>
+                          <input id="new-task" type="text" placeholder="Tire de la tache" class="text-center">
+                          <input id="new-task-description" type="text" placeholder="Description de la tache" class="text-center">
+                          <select id="new-task-etat">
+                            <option value="none">Donner l'etat de la tache ?&nbsp;</option>
+                            <option value="Active">Active</option>
+                            <option value="En Cours">En Cours</option>
+                            <option value="Terminé">Terminé</option>
+                          </select>
+                          <input id="new-task-deadline" type="date" class="text-center">
+                          <select id="priorite">
+                            <option value="none">Quelle est sa priorité ?&nbsp;</option>
+                            <option value="Faible">Faible</option>
+                            <option value="Moyenne">Moyenne</option>
+                            <option value="Important">Important</option>
+                          </select>
+                          <button type="submit" style="border: none;">Ajouter</button>
+                        </form>
+                    </div>
+                    <div class="details-task">
+                        
+                    </div>
 
                 </div>
             </div>
@@ -212,6 +246,7 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/chart-area-demo.js"></script>
     <script src="js/demo/chart-pie-demo.js"></script>
+    <script type="module" src="taches/tache.js"></script>
 
 </body>
 
