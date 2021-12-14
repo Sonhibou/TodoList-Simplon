@@ -1,10 +1,10 @@
 /* Basic Style */
-body {
+.list-taches {
     background: #fff;
     color: #333;
     font-family: Lato, sans-serif;
   }
-  .container {
+  .list-taches {
     display: block;
     width: 1300px;
     margin: 100px auto 0;
