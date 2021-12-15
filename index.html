@@ -19,6 +19,7 @@
 
     <!-- Custom styles for this template-->
     <link href="css/style.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="taches/taches.css">
    <!--  <link rel="stylesheet" href="taches/taches.css"> -->
    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase.js"></script>
 
@@ -159,30 +160,76 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
-                    <div class="list-task text-center">
+                    <div class="list-task text-center mb-5">
                         <h1 class="text-center mb-4">Bienvenue sur l'application Todo List</h1>
                         <form class="task mb-4">
-                          <label for="new-task" style="font-weight: 900; font-size: 20px;">Ajouter une taches</label>
-                          <input id="new-task" type="text" placeholder="Tire de la tache" class="text-center">
-                          <input id="new-task-description" type="text" placeholder="Description de la tache" class="text-center">
-                          <select id="new-task-etat">
-                            <option value="none">Donner l'etat de la tache ?&nbsp;</option>
-                            <option value="Active">Active</option>
-                            <option value="En Cours">En Cours</option>
-                            <option value="Terminé">Terminé</option>
-                          </select>
-                          <input id="new-task-deadline" type="date" class="text-center">
-                          <select id="priorite">
-                            <option value="none">Quelle est sa priorité ?&nbsp;</option>
-                            <option value="Faible">Faible</option>
-                            <option value="Moyenne">Moyenne</option>
-                            <option value="Important">Important</option>
-                          </select>
-                          <button type="submit" style="border: none;">Ajouter</button>
+                            <div class="row g-3">
+                                <div class="col-md">
+                                    <label for="new-task" style="font-weight: 900; font-size: 20px;">Ajouter une taches</label>
+                                </div>
+                                <div class="col-md">
+                                    <input id="new-task" type="text" class="form-control h-100" placeholder="Tire de la tache" aria-label="Tire de la tache">
+                                  </div>
+                                <div class="col-md-2">
+                                  <input id="new-task-description" type="text" class="form-control h-100" placeholder="Description de la tache" aria-label="Description de la tache">
+                                </div>
+                                <div class="col-md">
+                                    <select id="new-task-etat" class="form-select h-100" aria-label=".form-select-lg example">
+                                        <option value="none">Donner l'etat de la tache ?&nbsp;</option>
+                                        <option value="Active">Active</option>
+                                        <option value="En Cours">En Cours</option>
+                                        <option value="Terminé">Terminé</option>
+                                      </select>
+                                </div>
+                                <div class="col-md">
+                                  <input id="new-task-deadline" type="date" class="form-control h-100"  aria-label="Date">
+                                </div>
+                                <div class="col-md">
+                                    <select id="priorite" class="form-select h-100" aria-label=".form-select-lg example">
+                                        <option value="none">Quelle est sa priorité ?&nbsp;</option>
+                                        <option value="Faible">Faible</option>
+                                        <option value="Moyenne">Moyenne</option>
+                                        <option value="Important">Important</option>
+                                      </select>
+                                </div>
+                                <div class="col-md">
+                                    <button type="submit" class="btn btn-primary h-100">Ajouter</button>
+                                </div>
+                              </div>
                         </form>
                     </div>
-                    <div class="details-task">
-                        
+                      
+                    <div class="row details-task text-center">
+                        <div class="col-4 all-task">
+                            <div>
+                                
+                            </div>
+                            <h3 class="afaire">A faire</h3>
+                              <div>
+                                <h4>Priorité : Forte</h4>
+                                 <div class="priorite-forte">
+                                    
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Priorité : Moyenne</h4>
+                                 <div class="priorite-moyenne">
+                                    
+                                </div>
+                              </div>
+                              <div>
+                                <h4>Priorité : Faible</h4>
+                                 <div class="priorite-faible">
+                                    
+                                </div>
+                              </div>
+                        </div>
+                        <div class="col-4 doing-task">
+                            <h3 class="encours">En cours</h3>
+                        </div>
+                        <div class="col-4 finish-task">
+                            <h3 class="terminer">Terminés</h3>
+                        </div>
                     </div>
 
                 </div>

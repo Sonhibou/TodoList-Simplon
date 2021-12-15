@@ -77,29 +77,61 @@ firebase.initializeApp(firebaseConfig);
         document.querySelector(".task-faible").addEventListener("click", ()=>{
           read(priorite[2]);
         });
+
+        let forte = document.querySelector(".priorite-forte");
+        forte.value = read(read(priorite[0]))
+        console.log(forte)
+
         
-        
+   
         function read(Niveau){
           document.querySelector(".details-task").innerHTML = ""; 
           tacheInfo.once('value').then((snapshot) => {
               Object.keys(snapshot.val()).forEach((key) => {
                 if (`${snapshot.val()[key].priorite}` == Niveau){
                     let details = document.querySelector(".details-task");
+                    //let details = document.querySelector(".details-task");
                     let p = document.createElement("h4");
-                    let editTaches = document.createElement("button");
-                    editTaches.innerText="Modifier";
-                    editTaches.className="edit";
-                    editTaches.style.border = 0
-                    editTaches.style.margin = "20px";
+                    
+                    let editTaches = createButton(bouton[0]); 
+                    let deleteTaches = createButton(bouton[1]);
+          
+                    deleteTaches.addEventListener('click', ()=>{
+                      firebase.database().ref('liste/' + key).remove(); 
+                      alert("l'element a été bien supprimer")
+                    });
+
+                    editTaches.addEventListener('click', ()=>{
+                      let taskInput=document.querySelector("#new-task").value;
+                      let taskDescription=document.querySelector("#new-task-description").value;
+                      let taskEtat=document.querySelector("#new-task-etat").value;
+                      let taskDate=document.querySelector("#new-task-deadline").value;
+                      let taskPriorite=document.querySelector("#priorite").value;
+                      document.querySelector(".task").reset();
+                      let updates = {
+                        titre: taskInput,
+                        etat: taskEtat,
+                        description: taskDescription,
+                        priorite: taskPriorite,
+                        daate: taskDate,
+                      }
+                      firebase.database().ref('liste/' + key).update(updates); 
+
+                      alert("l'element a été bien modifier")
+                    });
+
                     
                     p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
                     p.appendChild(editTaches);
+                    p.appendChild(deleteTaches);
                     details.appendChild(p);
                   }
                     
               });
             });
         }
+        let bouton =['Modifier', 'Supprimer'];
+
         function readEtat(Niveau){
           document.querySelector(".details-task").innerHTML = ""; 
           tacheInfo.once('value').then((snapshot) => {
@@ -107,14 +139,14 @@ firebase.initializeApp(firebaseConfig);
                 if (`${snapshot.val()[key].etat}` == Niveau){
                     let details = document.querySelector(".details-task");
                     let p = document.createElement("h4");
-                    let editTaches = document.createElement("button");
-                    editTaches.innerText="Modifier";
-                    editTaches.className="edit";
-                    editTaches.style.border = 0
-                    editTaches.style.margin = "20px";
+
+                    let editTaches = createButton(bouton[0]);
+                    let deleteTaches = createButton(bouton[1]);
+                    console.log(deleteTaches)
                     
                     p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
                     p.appendChild(editTaches);
+                    p.appendChild(deleteTaches);
                     details.appendChild(p);
                   }
                     
@@ -131,5 +163,20 @@ firebase.initializeApp(firebaseConfig);
           }
       }
 
-        
+
+      function createTask(titre, description, priorite, etat, date){
+         let div = document.createElement("div");
+
+      }
+
+      function createButton(NameButton){
+        let buttonTaches = document.createElement("button");
+        buttonTaches.innerText=NameButton;
+        buttonTaches.className="edit";
+        buttonTaches.style.border = 0
+        buttonTaches.style.margin = "20px";
+
+        return buttonTaches; 
+      }
+
         
