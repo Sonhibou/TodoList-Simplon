@@ -79,10 +79,10 @@ firebase.initializeApp(firebaseConfig);
         });
 
         let forte = document.querySelector(".priorite-forte");
-        forte.value = read(read(priorite[0]))
-        console.log(forte)
-
+        //forte.value = read(read(priorite[0]))
         
+
+        let creatTask = document.querySelector(".all-task-doing");
    
         function read(Niveau){
           document.querySelector(".details-task").innerHTML = ""; 
@@ -90,11 +90,14 @@ firebase.initializeApp(firebaseConfig);
               Object.keys(snapshot.val()).forEach((key) => {
                 if (`${snapshot.val()[key].priorite}` == Niveau){
                     let details = document.querySelector(".details-task");
-                    //let details = document.querySelector(".details-task");
+                    
+                    console.log(creatTask)
                     let p = document.createElement("h4");
                     
                     let editTaches = createButton(bouton[0]); 
                     let deleteTaches = createButton(bouton[1]);
+
+
           
                     deleteTaches.addEventListener('click', ()=>{
                       firebase.database().ref('liste/' + key).remove(); 
@@ -119,7 +122,7 @@ firebase.initializeApp(firebaseConfig);
 
                       alert("l'element a été bien modifier")
                     });
-
+       
                     
                     p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
                     p.appendChild(editTaches);
@@ -164,10 +167,24 @@ firebase.initializeApp(firebaseConfig);
       }
 
 
-      function createTask(titre, description, priorite, etat, date){
+      function createTask(titre, description, modifier, supprimer, date){
          let div = document.createElement("div");
+         div.className = "col-3"
+         div.style.border = "15px"
+         let h = document.createElement("h6");
+         let p = document.createElement("p");
+         let span = document.createElement("span");
+         h.innerText = titre;
+         p.innerText = description;
+         span.innerText = date;
+         h.appendChild(p);
+         p.appendChild(span);
+         span.appendChild(modifier);
+         span.appendChild(supprimer);
+         div.appendChild(h);
 
       }
+      
 
       function createButton(NameButton){
         let buttonTaches = document.createElement("button");
