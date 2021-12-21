@@ -56,38 +56,33 @@
             <li class="nav-item">
                 <a class="nav-link collapsed all-task" href="#" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <button style="border: none; border-radius: 20px;">Toutes les tâches</button>
+                    <button style="border: none; border-radius: 5px;">Mes Tâches</button>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed doing-task" href="#" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <button style="border: none; border-radius: 20px;">Taches en Cours</button>
+                    <!-- <button style="border: none; border-radius: 20px;">Taches en Cours</button> -->
+                    <button class="collapse-item task-important" style="border: none;">Important</button>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed finish-task" href="#" data-target="#collapseUtilities"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <button style="border: none; border-radius: 20px;" >Taches terminé</button>
+                   <!--  <button style="border: none; border-radius: 20px;" >Taches terminé</button> -->
+                   <button class="collapse-item task-moyen" style="border: none;">Moyen</button>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed finish-task" href="#" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                   <!--  <button style="border: none; border-radius: 20px;" >Taches terminé</button> -->
+                   <button class="collapse-item task-faible" style="border: none;">Faible</button>
                 </a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider">
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <span style="font-size: 20px;">Niveau de tâche</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <button class="collapse-item task-important" style="border: none;">Important</button>
-                        <button class="collapse-item task-moyen" style="border: none;">Moyen</button>
-                        <button class="collapse-item task-faible" style="border: none;">Faible</button>
-                    </div>
-                </div>
-            </li>
         </ul>
         <!-- End of Sidebar -->
 
@@ -199,52 +194,11 @@
                         </form>
                     </div>
                       
-                    <div class="row details-task text-center">
-                        <div class="col-4 all-task-doing">
-                         <!--    <div>
-                                
-                            </div>
-                            <h3 class="afaire">A faire</h3>
-                              <div>
-                                <h4>Priorité : Forte</h4>
-                                 <div class="priorite-forte">
-                                    
-                                </div>
-                              </div>
-                              <div>
-                                <h4>Priorité : Moyenne</h4>
-                                 <div class="priorite-moyenne">
-                                    
-                                </div>
-                              </div>
-                              <div>
-                                <h4>Priorité : Faible</h4>
-                                 <div class="priorite-faible">
-                                    
-                                </div>
-                              </div> -->
-                        </div>
-                        <div class="col-4 doing-task">
-                            <!-- <h3 class="encours">En cours</h3> -->
-                        </div>
-                        <div class="col-4 finish-task">
-                           <!--  <h3 class="terminer">Terminés</h3> -->
-                        </div>
-                    </div>
+                    <div class="row details-task text-center d-flex">
+                       
 
-                </div>
+                   </div>
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; ToDo App 2021</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
         <!-- End of Content Wrapper -->

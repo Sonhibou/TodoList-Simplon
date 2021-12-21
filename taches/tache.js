@@ -36,6 +36,7 @@ firebase.initializeApp(firebaseConfig);
         saveTaskInfo(taskInput, taskDescription, taskEtat, taskPriorite, taskDate);
 
         document.querySelector(".task").reset();
+        location.reload(true);//javascript
       }
 
       // Save infos to Firebase
@@ -54,7 +55,7 @@ firebase.initializeApp(firebaseConfig);
       document.querySelector(".all-task").addEventListener("click", readTaskInfo);
               
         let priorite = ['Important', 'Moyenne', 'Faible'];
-        let etat = ['Terminé','En Cours'];
+/*         let etat = ['Terminé','En Cours'];
 
         document.querySelector(".finish-task").addEventListener("click", ()=>{
           readEtat(etat[0]);
@@ -63,7 +64,7 @@ firebase.initializeApp(firebaseConfig);
 
         document.querySelector(".doing-task").addEventListener("click", ()=>{
           readEtat(etat[1]);
-        });;
+        }); */
 
 
         document.querySelector(".task-important").addEventListener("click", ()=>{
@@ -78,11 +79,6 @@ firebase.initializeApp(firebaseConfig);
           read(priorite[2]);
         });
 
-        let forte = document.querySelector(".priorite-forte");
-        //forte.value = read(read(priorite[0]))
-        
-
-        let creatTask = document.querySelector(".all-task-doing");
    
         function read(Niveau){
           document.querySelector(".details-task").innerHTML = ""; 
@@ -91,71 +87,70 @@ firebase.initializeApp(firebaseConfig);
                 if (`${snapshot.val()[key].priorite}` == Niveau){
                     let details = document.querySelector(".details-task");
                     
-                    console.log(creatTask)
-                    let p = document.createElement("h4");
+
+                    const idButtonModifier = "btn_modifier-" + key
+                    const idButtonSupprimer = "btn_supprimer-" + key
                     
-                    let editTaches = createButton(bouton[0]); 
-                    let deleteTaches = createButton(bouton[1]);
-
-
+                    details.insertAdjacentHTML(
+                      "beforeend",
+                      `
+                      <div class="card" style="width: 23rem">
+                        <div class="card-body">
+                          <h4 class="card-title">${snapshot.val()[key].titre}</h4>
+                          <hr>
+                          <p class="card-text">
+                          ${snapshot.val()[key].description}</p>
+                        </div>
+                        <div class="rounded-bottom mdb-color lighten-3 text-center pt-3">
+                          <ul class="list-unstyled list-inline font-small">
+                            <li class="list-inline-item pr-2 white-text"><i class="far fa-clock pr-1"></i> <p>${snapshot.val()[key].daate}</p></li>
+                            <li class="list-inline-item pr-2"><a href="#" class="white-text"><i
+                                  class="far fa-comments pr-1"></i><p> ${snapshot.val()[key].etat} </p></a></li>
+                            <li class="list-inline-item pr-2"><a href="#" class="white-text">
+                            <button type="button" class="btn btn-primary" id = ${idButtonModifier}>Edit</button> </a></li>
+                            <li class="list-inline-item"><a href="#" class="white-text"> <button type="button" class="btn btn-danger" id=${idButtonSupprimer} >Delete</button> </a></li>
+                          </ul>
+                        </div>
+                      </div>
+                    `
+                    )
           
-                    deleteTaches.addEventListener('click', ()=>{
-                      firebase.database().ref('liste/' + key).remove(); 
-                      alert("l'element a été bien supprimer")
-                    });
+                    document.getElementById(idButtonSupprimer).addEventListener('click', ()=>{
+                        firebase.database().ref('liste/' + key).remove(); 
+                        location.reload(true);//javascript
+                        alert("l'element a été bien supprimer")
+                      });
 
-                    editTaches.addEventListener('click', ()=>{
-                      let taskInput=document.querySelector("#new-task").value;
-                      let taskDescription=document.querySelector("#new-task-description").value;
-                      let taskEtat=document.querySelector("#new-task-etat").value;
-                      let taskDate=document.querySelector("#new-task-deadline").value;
-                      let taskPriorite=document.querySelector("#priorite").value;
-                      document.querySelector(".task").reset();
-                      let updates = {
-                        titre: taskInput,
-                        etat: taskEtat,
-                        description: taskDescription,
-                        priorite: taskPriorite,
-                        daate: taskDate,
-                      }
-                      firebase.database().ref('liste/' + key).update(updates); 
+                    document.getElementById(idButtonModifier).addEventListener('click', ()=>{
+                        let taskInput=document.querySelector("#new-task").value;
+                        let taskDescription=document.querySelector("#new-task-description").value;
+                        let taskEtat=document.querySelector("#new-task-etat").value;
+                        let taskDate=document.querySelector("#new-task-deadline").value;
+                        let taskPriorite=document.querySelector("#priorite").value;
+                        document.querySelector(".task").reset();
+                        let updates = {
+                          titre: taskInput,
+                          etat: taskEtat,
+                          description: taskDescription,
+                          priorite: taskPriorite,
+                          daate: taskDate,
+                        }
+                        firebase.database().ref('liste/' + key).update(updates); 
 
-                      alert("l'element a été bien modifier")
-                    });
+                        alert("l'element a été bien modifier")
+                      });
        
                     
-                    p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
-                    p.appendChild(editTaches);
-                    p.appendChild(deleteTaches);
-                    details.appendChild(p);
+                   // p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
+                    //p.appendChild(editTaches);
+                    //p.appendChild(deleteTaches);
+                    //details.appendChild(p);
                   }
                     
               });
             });
         }
-        let bouton =['Modifier', 'Supprimer'];
 
-        function readEtat(Niveau){
-          document.querySelector(".details-task").innerHTML = ""; 
-          tacheInfo.once('value').then((snapshot) => {
-              Object.keys(snapshot.val()).forEach((key) => {
-                if (`${snapshot.val()[key].etat}` == Niveau){
-                    let details = document.querySelector(".details-task");
-                    let p = document.createElement("h4");
-
-                    let editTaches = createButton(bouton[0]);
-                    let deleteTaches = createButton(bouton[1]);
-                    console.log(deleteTaches)
-                    
-                    p.innerText=('Taches:' +'  '+ `Titre: ${snapshot.val()[key].titre}` +'  '+ `Description: ${snapshot.val()[key].description}` +'  '+ `Etat: ${snapshot.val()[key].etat}` +'  '+ `Priorite: ${snapshot.val()[key].priorite}`+'  '+ `Date: ${snapshot.val()[key].daate}`);
-                    p.appendChild(editTaches);
-                    p.appendChild(deleteTaches);
-                    details.appendChild(p);
-                  }
-                    
-              });
-            });
-        }
 
       // Read infos to Firebase
       function readTaskInfo(){
@@ -166,34 +161,8 @@ firebase.initializeApp(firebaseConfig);
           }
       }
 
-
-      function createTask(titre, description, modifier, supprimer, date){
-         let div = document.createElement("div");
-         div.className = "col-3"
-         div.style.border = "15px"
-         let h = document.createElement("h6");
-         let p = document.createElement("p");
-         let span = document.createElement("span");
-         h.innerText = titre;
-         p.innerText = description;
-         span.innerText = date;
-         h.appendChild(p);
-         p.appendChild(span);
-         span.appendChild(modifier);
-         span.appendChild(supprimer);
-         div.appendChild(h);
-
-      }
       
 
-      function createButton(NameButton){
-        let buttonTaches = document.createElement("button");
-        buttonTaches.innerText=NameButton;
-        buttonTaches.className="edit";
-        buttonTaches.style.border = 0
-        buttonTaches.style.margin = "20px";
-
-        return buttonTaches; 
-      }
-
-        
+      window.addEventListener("DOMContentLoaded", (event) => {
+        readTaskInfo()
+      })
